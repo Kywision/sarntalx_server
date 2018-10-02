@@ -37,7 +37,7 @@ def calc_pattern():
     return response[:-1] + ']'
 
 
-@app.route("/receive", methods=['POST'])
+@app.route("/receive/", methods=['POST'])
 def receive():
     if request.method == 'POST':
         if 'file' not in request.files:
