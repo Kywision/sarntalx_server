@@ -4,7 +4,6 @@ from flask import Flask, request, redirect, url_for, send_from_directory, json
 from werkzeug.utils import secure_filename
 import os
 from coordinate import Coordinate
-from random import randint
 
 UPLOAD_FOLDER = '/images/'
 ALLOWED_EXTENSIONS = set(['jpg'])
