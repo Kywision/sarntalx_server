@@ -4,6 +4,8 @@ from flask import Flask, request, redirect, url_for, send_from_directory, json
 from werkzeug.utils import secure_filename
 import os
 from coordinate import Coordinate
+from classifier import Classifier
+from PIL import Image
 
 UPLOAD_FOLDER = '/images/'
 ALLOWED_EXTENSIONS = set(['jpg'])
@@ -21,10 +23,14 @@ def hello():
 def receive():
     if request.method == 'POST':
         file = request.files['file']
-        file.save(os.path.join[app.config['UPLOAD_FOLDER'], 'filename'])
-    co = Coordinate('20', '40')
-    jsonStr = json.dumps(co.toJSON())
-    return jsonStr
+        IMGAE_PATH = os.path.join[app.config['UPLOAD_FOLDER'], 'filename'] 
+        file.save('IMGAE_PATH')
+        img = Image.open('IMAGE_PATH')
+        detector = Classifier()
+        results = detector.detect(img)
+        json = results.toJSON
+        return json
+
 
 
 
