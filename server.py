@@ -20,14 +20,16 @@ def hello():
     return "Hello World!"
 
 @app.route("/receive", methods=['POST'])
-def receive():
+def receiveDronePictures():
     if request.method == 'POST':
         file = request.files['file']
-        IMGAE_PATH = os.path.join[app.config['UPLOAD_FOLDER'], 'filename'] 
+        #IMGAE_PATH = os.path.join[app.config['UPLOAD_FOLDER'], 'filename'] 
+        IMAGE_PATH = 'image1.jpg'
         file.save('IMGAE_PATH')
         img = Image.open('IMAGE_PATH')
         detector = Classifier()
         results = detector.detect(img)
+        print results
         json = results.toJSON
         return json
 
