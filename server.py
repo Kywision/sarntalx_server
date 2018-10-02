@@ -25,6 +25,7 @@ def receive():
         file.save(os.path.join[app.config['UPLOAD_FOLDER'], 'filename'])
     co = Coordinate('20', '40')
     jsonStr = json.dumps(co.toJSON())
+    return jsonStr
 
 
 
