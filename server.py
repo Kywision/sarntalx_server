@@ -6,6 +6,8 @@ import os
 from coordinate import Coordinate
 from classifier import Classifier
 from PIL import Image
+import base64   
+
 
 UPLOAD_FOLDER = '/images/'
 ALLOWED_EXTENSIONS = set(['jpg'])
@@ -22,14 +24,17 @@ def hello():
 @app.route("/receive", methods=['POST'])
 def receiveDronePictures():
     if request.method == 'POST':
-        file = request.files['file']
-        #IMGAE_PATH = os.path.join[app.config['UPLOAD_FOLDER'], 'filename'] 
-        IMAGE_PATH = 'image1.jpg'
-        file.save('IMGAE_PATH')
-        img = Image.open('IMAGE_PATH')
+        file = request.get_data()
+        image_string = base64.decodestring(file)
+        image = Image.open(image_string)
+
+        #IMGAE_PATH = os.path.join[app.config['UPLOAD_FOLDER'], 'image.name'] 
+        #IMAGE_PATH = 'image1.jpg'
+        #file.save('IMGAE_PATH')
+        #img = Image.open('IMAGE_PATH')
         detector = Classifier()
         results = detector.detect(img)
-        print results
+        print(results)
         json = results.toJSON
         return json
 
