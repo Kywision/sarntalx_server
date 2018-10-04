@@ -6,3 +6,5 @@ jupyter
 matplotlib
 tensorflow
 numpy
+flask
+requests
