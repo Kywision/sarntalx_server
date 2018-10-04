@@ -2,12 +2,15 @@ import tensorflow as tf
 import numpy as np
 import tarfile
 import os
+import math
+from PIL import Image
+import datetime
+import matplotlib
 
 # object detection utils
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
 from object_detection.utils import ops as utils_ops
-import math
 
 
 class Classifier:
@@ -98,10 +101,25 @@ class Classifier:
                     'confidence': scores[i].item(),
                     'coordinates': coordinates
                 })
+        self.save_image(image_np, output_dict)
         return detections
 
     def lookup_class(self, class_id):
         return self.category_index[class_id]['name']
+
+    def save_image(self, image_np, output_dict):
+        vis_util.visualize_boxes_and_labels_on_image_array(
+            image_np,
+            output_dict['detection_boxes'],
+            output_dict['detection_classes'],
+            output_dict['detection_scores'],
+            self.category_index,
+            instance_masks=output_dict.get('detection_masks'),
+            use_normalized_coordinates=True,
+            line_thickness=3)
+        img = Image.fromarray(image_np)
+        name = "classified_{}.jpg".format(datetime.datetime.now())
+        img.save(name)
 
 
 def box_to_pixel(width, height, coordinates):
