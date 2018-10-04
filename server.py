@@ -34,6 +34,7 @@ def receiveDronePictures():
         #img = Image.open('IMAGE_PATH')
         detector = Classifier()
         results = detector.detect(img)
+
         print(results)
         json = results.toJSON
         return json
@@ -43,7 +44,7 @@ def receiveDronePictures():
 
 if __name__ == "__main__":
     
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')
 
 
 
