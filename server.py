@@ -29,33 +29,16 @@ def receiveDronePictures():
 
         file = request.get_data()
         print('file received')
-        # imgdata = base64.b64decode(file)
+        
         with open('tmp.jpg', 'wb') as fh:
             fh.write(base64.decodebytes(file))
 
-        #image_string = base64.decodestring(file)
-        
-        #image = Image.open(imgdata)
-        #print('image opened')
-        
-        """ image_string = cStringIO.StringIO(base64.b64decode(data['img']))
+        img = Image.open('tmp.jpg')
+        detector = Classifier()
+        results = detector.detect(img)
 
-        data['img'] = file
-        print('arrayd')
-        image_data = re.sub('^data:image/.+;base64,', '', data['img']).decode('base64')
-        print('stripped')
-        image = Image.open(cStringIO.StringIO(image_data))
-        print('opened') """
-
-        #IMGAE_PATH = os.path.join[app.config['UPLOAD_FOLDER'], 'image.name'] 
-        #IMAGE_PATH = 'image1.jpg'
-        #file.save('IMGAE_PATH')
-        #img = Image.open('IMAGE_PATH')
-        # detector = Classifier()
-        # results = detector.detect(imgdata)
-
-        # print(results)
-        # json = results.toJSON
+        print(results)
+        json = results.toJSON
         return json
 
 
