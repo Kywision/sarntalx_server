@@ -24,16 +24,23 @@ def hello():
 @app.route("/receive", methods=['POST'])
 def receiveDronePictures():
     if request.method == 'POST':
+
+        
+
         file = request.get_data()
-        image_string = base64.decodestring(file)
-        image = Image.open(image_string)
+        print('file received')
+        imgdata = base64.b64decode(file)
+        #image_string = base64.decodestring(file)
+        print('file decoded')
+        #image = Image.open(imgdata)
+        #print('image opened')
 
         #IMGAE_PATH = os.path.join[app.config['UPLOAD_FOLDER'], 'image.name'] 
         #IMAGE_PATH = 'image1.jpg'
         #file.save('IMGAE_PATH')
         #img = Image.open('IMAGE_PATH')
         detector = Classifier()
-        results = detector.detect(img)
+        results = detector.detect(image)
 
         print(results)
         json = results.toJSON
