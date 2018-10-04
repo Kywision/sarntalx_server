@@ -29,7 +29,10 @@ def receiveDronePictures():
 
         file = request.get_data()
         print('file received')
-        imgdata = base64.b64decode(file)
+        # imgdata = base64.b64decode(file)
+        with open('tmp.jpg', 'wb') as fh:
+            fh.write(base64.decodebytes(file))
+
         #image_string = base64.decodestring(file)
         
         #image = Image.open(imgdata)
@@ -48,11 +51,11 @@ def receiveDronePictures():
         #IMAGE_PATH = 'image1.jpg'
         #file.save('IMGAE_PATH')
         #img = Image.open('IMAGE_PATH')
-        detector = Classifier()
-        results = detector.detect(imgdata)
+        # detector = Classifier()
+        # results = detector.detect(imgdata)
 
-        print(results)
-        json = results.toJSON
+        # print(results)
+        # json = results.toJSON
         return json
 
 
