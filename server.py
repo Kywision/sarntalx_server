@@ -29,10 +29,11 @@ def receiveDronePictures():
 
     b64 = received["data"]
     img = Image.open(BytesIO(base64.b64decode(b64)))
-    results = DETECTOR.detect(img, received["coordinates"])
+    (results, b) = DETECTOR.detect(img, received["coordinates"])
 
     output = {
         'name': received['name'],
+        'data': b,
         'detections': results,
     }
     json_data = json.dumps(output)

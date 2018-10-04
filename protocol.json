@@ -11,6 +11,7 @@
 // response
 {
   "name": "img1.jpg",
+  "data": "base64",
   "detections": [
     {
       "box": {

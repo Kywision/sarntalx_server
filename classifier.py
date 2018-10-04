@@ -6,6 +6,8 @@ import math
 from PIL import Image
 import datetime
 import matplotlib
+import base64
+from io import BytesIO
 
 # object detection utils
 from object_detection.utils import label_map_util
@@ -101,8 +103,8 @@ class Classifier:
                     'confidence': scores[i].item(),
                     'coordinates': coordinates
                 })
-        self.save_image(image_np, output_dict)
-        return detections
+        b64 = self.save_image(image_np, output_dict)
+        return (detections, b64)
 
     def lookup_class(self, class_id):
         return self.category_index[class_id]['name']
@@ -118,8 +120,9 @@ class Classifier:
             use_normalized_coordinates=True,
             line_thickness=3)
         img = Image.fromarray(image_np)
-        name = "classified_{}.jpg".format(datetime.datetime.now())
-        img.save(name)
+        buffered = BytesIO()
+        img.save(buffered, format="JPEG")
+        return str(base64.b64encode(buffered.getvalue()), 'utf-8')
 
 
 def box_to_pixel(width, height, coordinates):
