@@ -1,1 +1,1 @@
-base64 image1.jpg | curl --data @- http://0.0.0.0:5000/receive
+base64 image1.jpg | curl --data @- http://localhost:5000/detect

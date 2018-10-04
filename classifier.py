@@ -14,7 +14,7 @@ class Classifier:
     def __init__(self):
         PATH_TO_FROZEN_GRAPH = os.path.abspath(
             './model/frozen_inference_graph.pb')
-        PATH_TO_LABELS = os.path.abspath('./model/mscoco_label_map.pbtxt')
+        PATH_TO_LABELS = os.path.abspath('./model/labelmap.pbtxt')
 
         detection_graph = tf.Graph()
         with detection_graph.as_default():
@@ -80,7 +80,7 @@ class Classifier:
                     output_dict['detection_masks'] = output_dict['detection_masks'][0]
         return output_dict
 
-    def detect(self, image, min_confidence=0.8):
+    def detect(self, image, coordinates, min_confidence=0.8):
         """ """
         image_np = load_image_into_numpy_array(image)
         (im_width, im_height) = image.size
@@ -95,9 +95,9 @@ class Classifier:
                 detections.append({
                     'box': box_to_pixel(im_width, im_height, boxes[i]),
                     'label': self.lookup_class(classes[i]),
-                    'confidence': scores[i].item()
+                    'confidence': scores[i].item(),
+                    'coordinates': coordinates
                 })
-        print(detections)
         return detections
 
     def lookup_class(self, class_id):
@@ -107,7 +107,12 @@ class Classifier:
 def box_to_pixel(width, height, coordinates):
     ymin, xmin, ymax, xmax = coordinates
     coordinates = [height * ymin, width * xmin, height * ymax, width * xmax]
-    return [math.floor(i) for i in coordinates]
+    return {
+        'ymin': math.floor(ymin * height),
+        'xmin': math.floor(xmin * width),
+        'ymax': math.floor(ymax * height),
+        'xmax': math.floor(xmax * width)
+    }
 
 
 def load_image_into_numpy_array(image):

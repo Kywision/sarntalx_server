@@ -1,0 +1,30 @@
+// request
+{
+  "name": "img001.jpg",
+  "data": "base64",
+  "coordinates": {
+    "lat": 123,
+    "lng": 123
+  }
+}
+
+// response
+{
+  "name": "img1.jpg",
+  "detections": [
+    {
+      "box": {
+        "ymin": 270,
+        "xmin": 207,
+        "ymax": 749,
+        "xmax": 351
+      },
+      "coordinates": {
+        "lat": 123,
+        "lng": 132
+      },
+      "label": "person",
+      "confidence": 0.9837414026260376
+    }
+  ]
+}

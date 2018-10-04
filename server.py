@@ -18,17 +18,18 @@ ALLOWED_EXTENSIONS = set(['jpg'])
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+DETECTOR = Classifier()
+
 
 @app.route("/detect", methods=['POST'])
 def receiveDronePictures():
     file = request.get_data()
     print('file received')
     img = Image.open(BytesIO(base64.b64decode(file)))
-    detector = Classifier()
-    results = detector.detect(img)
+    results = DETECTOR.detect(img, None)
     json_data= json.dumps(results)
     print(json_data)
     return json_data
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='localhost')
